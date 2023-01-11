@@ -1,0 +1,273 @@
+{
+    "AWSTemplateFormatVersion": "2010-09-09",
+    "Metadata": {
+        "AWS::CloudFormation::Designer": {
+            "4639a4e1-1177-420b-be9f-8c71edcfbb70": {
+                "size": {
+                    "width": 60,
+                    "height": 60
+                },
+                "position": {
+                    "x": 220,
+                    "y": 60
+                },
+                "z": 1,
+                "embeds": []
+            },
+            "d23ea37d-417a-44f8-a54d-e862a737cc68": {
+                "size": {
+                    "width": 60,
+                    "height": 60
+                },
+                "position": {
+                    "x": 120,
+                    "y": 60
+                },
+                "z": 1,
+                "embeds": []
+            },
+            "fb045faa-9d05-416d-a811-844626663b2f": {
+                "size": {
+                    "width": 60,
+                    "height": 60
+                },
+                "position": {
+                    "x": 20,
+                    "y": 60
+                },
+                "z": 1,
+                "embeds": []
+            },
+            "32ddf9d5-cf38-4bf9-95f9-c87adc19e8a6": {
+                "size": {
+                    "width": 60,
+                    "height": 60
+                },
+                "position": {
+                    "x": -80,
+                    "y": 60
+                },
+                "z": 1,
+                "embeds": []
+            }
+        }
+    },
+    "Resources": {
+        "IAMR5CMSC": {
+            "Type": "AWS::IAM::Role",
+            "Properties": {
+                "AssumeRolePolicyDocument": {
+                    "Version": "2012-10-17",
+                    "Statement": [
+                        {
+                            "Effect": "Allow",
+                            "Principal": {
+                                "Service": [
+                                    "lambda.amazonaws.com"
+                                ]
+                            },
+                            "Action": "sts:AssumeRole"
+                        }
+                    ]
+                },
+                "RoleName": {
+                    "Fn::Join": [
+                        "-",
+                        [
+                            "WorkerLambdaRole",
+                            {
+                                "Fn::Sub": "${AWS::Region}"
+                            }
+                        ]
+                    ]
+                },
+                "Policies": [
+                    {
+                        "PolicyDocument": {
+                            "Version": "2012-10-17",
+                            "Statement": [
+                                {
+                                    "Sid": "VisualEditor0",
+                                    "Effect": "Allow",
+                                    "Action": [
+                                        "logs:CreateLogGroup"
+                                    ],
+                                    "Resource": [
+                                        {
+                                            "Fn::Sub": "arn:aws:logs:${AWS::Region}:${AWS::AccountId}:*"
+                                        },
+                                        {
+                                            "Fn::Sub": "arn:aws:sqs:${AWS::Region}:${AWS::AccountId}:*"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "Sid": "VisualEditor1",
+                                    "Effect": "Allow",
+                                    "Action": [
+                                        "logs:CreateLogStream",
+                                        "logs:PutLogEvents"
+                                    ],
+                                    "Resource": {
+                                        "Fn::Sub": "arn:aws:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/*:*"
+                                    }
+                                }
+                            ]
+                        },
+                        "PolicyName": {
+                            "Fn::Join": [
+                                "-",
+                                [
+                                    "WorkerLambdaPolicy",
+                                    {
+                                        "Fn::Sub": "${AWS::Region}"
+                                    }
+                                ]
+                            ]
+                        }
+                    }
+                ]
+            },
+            "Metadata": {
+                "AWS::CloudFormation::Designer": {
+                    "id": "fb045faa-9d05-416d-a811-844626663b2f"
+                }
+            }
+        },
+        "CMC6CO7": {
+            "Type": "AWS::CertificateManager::Certificate",
+            "Properties": {
+                "CertificateTransparencyLoggingPreference": "ENABLED",
+                "DomainName": {
+                    "Fn::Join": [
+                        ".",
+                        [
+                            "*",
+                            {
+                                "Ref": "WildcardCertificateDomainName"
+                            }
+                        ]
+                    ]
+                },
+                "DomainValidationOptions": [
+                    {
+                        "DomainName": {
+                            "Fn::Join": [
+                                ".",
+                                [
+                                    "*",
+                                    {
+                                        "Ref": "WildcardCertificateDomainName"
+                                    }
+                                ]
+                            ]
+                        },
+                        "HostedZoneId": {
+                            "Ref": "APIRoute53ZoneID"
+                        }
+                    },
+                    {
+                        "DomainName": {
+                            "Fn::Join": [
+                                ".",
+                                [
+                                    "*",
+                                    {
+                                        "Fn::Sub": "${AWS::Region}"
+                                    },
+                                    {
+                                        "Ref": "WildcardCertificateDomainName"
+                                    }
+                                ]
+                            ]
+                        },
+                        "HostedZoneId": {
+                            "Ref": "APIRoute53ZoneID"
+                        }
+                    }
+                ],
+                "SubjectAlternativeNames": [
+                    {
+                        "Fn::Join": [
+                            ".",
+                            [
+                                "*",
+                                {
+                                    "Fn::Sub": "${AWS::Region}"
+                                },
+                                {
+                                    "Ref": "WildcardCertificateDomainName"
+                                }
+                            ]
+                        ]
+                    }
+                ],
+                "ValidationMethod": "DNS"
+            },
+            "Metadata": {
+                "AWS::CloudFormation::Designer": {
+                    "id": "32ddf9d5-cf38-4bf9-95f9-c87adc19e8a6"
+                }
+            }
+        }
+    },
+    "Parameters": {
+        "APIRoute53ZoneID": {
+            "Default": "Z00916901T4ZRKA0IKH9MN32",
+            "Description": "The ID of the Route 53 zone to check for the domain for certificate validation.",
+            "Type": "String",
+            "MinLength": 10,
+            "MaxLength": 25
+        },
+        "WildcardCertificateDomainName": {
+            "Default": "openapi.prediket.dev or authorizedapi.prediket.dev",
+            "Description": "The wildcard name for the certificate to use. Wildcard domain based on default eg: *.openapi.prediket.dev or *.authorizedapi.prediket.dev.",
+            "Type": "String",
+            "MinLength": 10,
+            "MaxLength": 120
+        }
+    },
+    "Outputs": {
+        "WildcardRegionalCertificateARN": {
+            "Description": "The ARN for the wildcard regional certificate",
+            "Value": {
+                "Ref": "CMC6CO7"
+            },
+            "Export": {
+                "Name": {
+                    "Fn::Join": [
+                        "-",
+                        [
+                            {
+                                "Ref": "AWS::StackName"
+                            },
+                            "WildcardRegionalCertificateARN"
+                        ]
+                    ]
+                }
+            }
+        },
+        "WorkerRoleARN": {
+            "Description": "The ARN for the worker role",
+            "Value": {
+                "Fn::GetAtt": [
+                    "IAMR5CMSC",
+                    "Arn"
+                ]
+            },
+            "Export": {
+                "Name": {
+                    "Fn::Join": [
+                        "-",
+                        [
+                            {
+                                "Ref": "AWS::StackName"
+                            },
+                            "WorkerRoleARN"
+                        ]
+                    ]
+                }
+            }
+        }
+    }
+}

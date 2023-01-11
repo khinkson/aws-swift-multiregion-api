@@ -1,0 +1,840 @@
+{
+    "AWSTemplateFormatVersion": "2010-09-09",
+    "Metadata": {
+        "AWS::CloudFormation::Designer": {
+            "b218c687-126c-4e54-873e-7981f41ab5a8": {
+                "size": {
+                    "width": 60,
+                    "height": 60
+                },
+                "position": {
+                    "x": 30,
+                    "y": 360
+                },
+                "z": 1,
+                "embeds": []
+            },
+            "fe995a30-36a4-4897-8b75-4f99a795e225": {
+                "size": {
+                    "width": 60,
+                    "height": 60
+                },
+                "position": {
+                    "x": 30,
+                    "y": 460
+                },
+                "z": 1,
+                "embeds": [],
+                "isassociatedwith": [
+                    "b218c687-126c-4e54-873e-7981f41ab5a8"
+                ]
+            },
+            "438f01b0-8b5a-4299-b163-bd189eacf695": {
+                "size": {
+                    "width": 60,
+                    "height": 60
+                },
+                "position": {
+                    "x": 80,
+                    "y": -60
+                },
+                "z": 1,
+                "embeds": []
+            },
+            "fe2281fb-a9b1-4f83-986b-aa22cc2b1653": {
+                "size": {
+                    "width": 60,
+                    "height": 60
+                },
+                "position": {
+                    "x": 30,
+                    "y": 60
+                },
+                "z": 1,
+                "embeds": []
+            },
+            "f86b8cc1-bf04-419a-851b-7b61dfc7dd67": {
+                "size": {
+                    "width": 60,
+                    "height": 60
+                },
+                "position": {
+                    "x": 30,
+                    "y": 260
+                },
+                "z": 1,
+                "embeds": []
+            },
+            "d5bc2370-f69b-41cc-9b8e-b87d704dde4e": {
+                "size": {
+                    "width": 60,
+                    "height": 60
+                },
+                "position": {
+                    "x": 30,
+                    "y": 160
+                },
+                "z": 1,
+                "embeds": []
+            },
+            "2dc685bd-db2c-4464-a626-8476c2926b00": {
+                "size": {
+                    "width": 60,
+                    "height": 60
+                },
+                "position": {
+                    "x": 200,
+                    "y": 30
+                },
+                "z": 1,
+                "embeds": []
+            },
+            "560bd8e6-f4b7-47cd-8f2c-3ffe7a9e09d5": {
+                "size": {
+                    "width": 60,
+                    "height": 60
+                },
+                "position": {
+                    "x": 100,
+                    "y": 120
+                },
+                "z": 1,
+                "embeds": []
+            },
+            "757b312e-380c-4f0b-912b-2fa55897efcc": {
+                "size": {
+                    "width": 60,
+                    "height": 60
+                },
+                "position": {
+                    "x": -270,
+                    "y": 20
+                },
+                "z": 1,
+                "embeds": []
+            },
+            "9b9989ac-8bf2-47ce-9c52-24806b0ab182": {
+                "size": {
+                    "width": 60,
+                    "height": 60
+                },
+                "position": {
+                    "x": -170,
+                    "y": 20
+                },
+                "z": 1,
+                "embeds": []
+            },
+            "29bbc63e-e8a4-43db-a837-d5e20b6f73ec": {
+                "size": {
+                    "width": 60,
+                    "height": 60
+                },
+                "position": {
+                    "x": -70,
+                    "y": 20
+                },
+                "z": 1,
+                "embeds": [],
+                "dependson": [
+                    "9b9989ac-8bf2-47ce-9c52-24806b0ab182"
+                ]
+            },
+            "907c1653-dba2-43d0-b446-07c049836815": {
+                "size": {
+                    "width": 60,
+                    "height": 60
+                },
+                "position": {
+                    "x": -270,
+                    "y": 110
+                },
+                "z": 1,
+                "embeds": []
+            },
+            "17f59b38-4e87-483a-9f72-cfde7a6bee5b": {
+                "size": {
+                    "width": 60,
+                    "height": 60
+                },
+                "position": {
+                    "x": -70,
+                    "y": 110
+                },
+                "z": 1,
+                "embeds": [],
+                "dependson": [
+                    "611fc61b-4b14-4893-a299-106220d33122"
+                ]
+            },
+            "611fc61b-4b14-4893-a299-106220d33122": {
+                "size": {
+                    "width": 60,
+                    "height": 60
+                },
+                "position": {
+                    "x": -170,
+                    "y": 110
+                },
+                "z": 1,
+                "embeds": []
+            },
+            "50a01754-66b7-4e71-b362-45b000d9edbc": {
+                "size": {
+                    "width": 60,
+                    "height": 60
+                },
+                "position": {
+                    "x": -180.00518698910736,
+                    "y": 214.522821895101
+                },
+                "z": 0,
+                "embeds": []
+            }
+        }
+    },
+    "Resources": {
+        "LF1A5HN": {
+            "Type": "AWS::Lambda::Function",
+            "Properties": {
+                "Architectures": [
+                    {
+                        "Ref": "LambdaCPUArchitecture"
+                    }
+                ],
+                "Code": {
+                    "S3Bucket": {
+                        "Fn::Join": [
+                            "-",
+                            [
+                                {
+                                    "Ref": "S3LambdaCodeSourceBucketNamePrefix"
+                                },
+                                {
+                                    "Fn::Sub": "${AWS::Region}"
+                                }
+                            ]
+                        ]
+                    },
+                    "S3Key": {
+                        "Ref": "S3LambdaSourceCodeKeyPath"
+                    }
+                },
+                "Description": "The lambda that handles requests from the user.",
+                "FunctionName": {
+                    "Fn::Join": [
+                        "-",
+                        [
+                            {
+                                "Ref": "APIDomainPrefix"
+                            },
+                            {
+                                "Fn::Sub": "${AWS::Region}"
+                            }
+                        ]
+                    ]
+                },
+                "Handler": "hello.handler",
+                "MemorySize": {
+                    "Ref": "LambdaMemorySize"
+                },
+                "PackageType": {
+                    "Ref": "LambdaPackageType"
+                },
+                "Role": {
+                    "Fn::GetAtt": [
+                        "IAMR3OKL",
+                        "Arn"
+                    ]
+                },
+                "Runtime": "provided.al2",
+                "Timeout": {
+                    "Ref": "LambdaFunctionTimeout"
+                }
+            },
+            "Metadata": {
+                "AWS::CloudFormation::Designer": {
+                    "id": "b218c687-126c-4e54-873e-7981f41ab5a8"
+                }
+            }
+        },
+        "LP3LGM6": {
+            "Type": "AWS::Lambda::Permission",
+            "Properties": {
+                "Action": "lambda:InvokeFunction",
+                "FunctionName": {
+                    "Fn::GetAtt": [
+                        "LF1A5HN",
+                        "Arn"
+                    ]
+                },
+                "Principal": "apigateway.amazonaws.com",
+                "SourceArn": {
+                    "Fn::Join": [
+                        "",
+                        [
+                            "arn:aws:execute-api:",
+                            {
+                                "Ref": "AWS::Region"
+                            },
+                            ":",
+                            {
+                                "Ref": "AWS::AccountId"
+                            },
+                            ":",
+                            {
+                                "Ref": "AGV2A2R1HD"
+                            },
+                            "/*/$default"
+                        ]
+                    ]
+                }
+            },
+            "Metadata": {
+                "AWS::CloudFormation::Designer": {
+                    "id": "fe995a30-36a4-4897-8b75-4f99a795e225"
+                }
+            }
+        },
+        "AGV2A2R1HD": {
+            "Type": "AWS::ApiGatewayV2::Api",
+            "Properties": {
+                "CorsConfiguration": {
+                    "AllowHeaders": [
+                        "Authorization",
+                        "*"
+                    ],
+                    "AllowMethods": [
+                        "GET",
+                        "POST",
+                        "PUT",
+                        "DELETE",
+                        "OPTIONS"
+                    ],
+                    "AllowOrigins": [
+                        "*"
+                    ],
+                    "ExposeHeaders": [],
+                    "MaxAge": 300
+                },
+                "Description": {
+                    "Fn::Join": [
+                        " ",
+                        [
+                            {
+                                "Fn::Sub": "${AWS::Region}"
+                            },
+                            "entry point of the runtime API"
+                        ]
+                    ]
+                },
+                "DisableExecuteApiEndpoint": true,
+                "Name": {
+                    "Fn::Join": [
+                        "-",
+                        [
+                            {
+                                "Ref": "APIDomainPrefix"
+                            },
+                            {
+                                "Fn::Sub": "${AWS::Region}"
+                            }
+                        ]
+                    ]
+                },
+                "ProtocolType": "HTTP"
+            },
+            "Metadata": {
+                "AWS::CloudFormation::Designer": {
+                    "id": "fe2281fb-a9b1-4f83-986b-aa22cc2b1653"
+                }
+            }
+        },
+        "AGV2I335OY": {
+            "Type": "AWS::ApiGatewayV2::Integration",
+            "Properties": {
+                "ApiId": {
+                    "Ref": "AGV2A2R1HD"
+                },
+                "ConnectionType": "INTERNET",
+                "IntegrationMethod": "POST",
+                "IntegrationType": "AWS_PROXY",
+                "IntegrationUri": {
+                    "Fn::GetAtt": [
+                        "LF1A5HN",
+                        "Arn"
+                    ]
+                },
+                "PayloadFormatVersion": "2.0",
+                "TimeoutInMillis": 30000
+            },
+            "Metadata": {
+                "AWS::CloudFormation::Designer": {
+                    "id": "f86b8cc1-bf04-419a-851b-7b61dfc7dd67"
+                }
+            }
+        },
+        "AGV2R29BVK": {
+            "Type": "AWS::ApiGatewayV2::Route",
+            "Properties": {
+                "ApiId": {
+                    "Ref": "AGV2A2R1HD"
+                },
+                "ApiKeyRequired": false,
+                "AuthorizationType": "NONE",
+                "RouteKey": "$default",
+                "Target": {
+                    "Fn::Join": [
+                        "/",
+                        [
+                            "integrations",
+                            {
+                                "Ref": "AGV2I335OY"
+                            }
+                        ]
+                    ]
+                }
+            },
+            "Metadata": {
+                "AWS::CloudFormation::Designer": {
+                    "id": "d5bc2370-f69b-41cc-9b8e-b87d704dde4e"
+                }
+            }
+        },
+        "AGV2S4BWE2": {
+            "Type": "AWS::ApiGatewayV2::Stage",
+            "Properties": {
+                "ApiId": {
+                    "Ref": "AGV2A2R1HD"
+                },
+                "DefaultRouteSettings": {
+                    "DetailedMetricsEnabled": false
+                },
+                "AutoDeploy": true,
+                "StageName": "$default"
+            },
+            "Metadata": {
+                "AWS::CloudFormation::Designer": {
+                    "id": "560bd8e6-f4b7-47cd-8f2c-3ffe7a9e09d5"
+                }
+            }
+        },
+        "AGV2DNHGV8": {
+            "Type": "AWS::ApiGatewayV2::DomainName",
+            "Properties": {
+                "DomainName": {
+                    "Fn::Join": [
+                        ".",
+                        [
+                            {
+                                "Ref": "APIDomainPrefix"
+                            },
+                            {
+                                "Fn::Sub": "${AWS::Region}"
+                            },
+                            {
+                                "Ref": "APIDomainSuffix"
+                            }
+                        ]
+                    ]
+                },
+                "DomainNameConfigurations": [
+                    {
+                        "CertificateArn": {
+                            "Fn::ImportValue": {
+                                "Fn::Sub": "${OperationsStackName}-WildcardRegionalCertificateARN"
+                            }
+                        },
+                        "SecurityPolicy": "TLS_1_2",
+                        "EndpointType": "REGIONAL"
+                    }
+                ]
+            },
+            "Metadata": {
+                "AWS::CloudFormation::Designer": {
+                    "id": "757b312e-380c-4f0b-912b-2fa55897efcc"
+                }
+            }
+        },
+        "R53RS298ZM": {
+            "Type": "AWS::Route53::RecordSet",
+            "Properties": {
+                "AliasTarget": {
+                    "HostedZoneId": {
+                        "Fn::GetAtt": [
+                            "AGV2DNHGV8",
+                            "RegionalHostedZoneId"
+                        ]
+                    },
+                    "DNSName": {
+                        "Fn::GetAtt": [
+                            "AGV2DNHGV8",
+                            "RegionalDomainName"
+                        ]
+                    },
+                    "EvaluateTargetHealth": true
+                },
+                "HostedZoneId": {
+                    "Ref": "Route53ZoneID"
+                },
+                "Name": {
+                    "Fn::Join": [
+                        ".",
+                        [
+                            {
+                                "Ref": "APIDomainPrefix"
+                            },
+                            {
+                                "Fn::Sub": "${AWS::Region}"
+                            },
+                            {
+                                "Ref": "APIDomainSuffix"
+                            }
+                        ]
+                    ]
+                },
+                "Type": "A"
+            },
+            "Metadata": {
+                "AWS::CloudFormation::Designer": {
+                    "id": "9b9989ac-8bf2-47ce-9c52-24806b0ab182"
+                }
+            }
+        },
+        "AGV2AM3Z1HR": {
+            "Type": "AWS::ApiGatewayV2::ApiMapping",
+            "Properties": {
+                "ApiId": {
+                    "Ref": "AGV2A2R1HD"
+                },
+                "DomainName": {
+                    "Fn::Join": [
+                        ".",
+                        [
+                            {
+                                "Ref": "APIDomainPrefix"
+                            },
+                            {
+                                "Fn::Sub": "${AWS::Region}"
+                            },
+                            {
+                                "Ref": "APIDomainSuffix"
+                            }
+                        ]
+                    ]
+                },
+                "Stage": {
+                    "Ref": "AGV2S4BWE2"
+                }
+            },
+            "Metadata": {
+                "AWS::CloudFormation::Designer": {
+                    "id": "29bbc63e-e8a4-43db-a837-d5e20b6f73ec"
+                }
+            },
+            "DependsOn": [
+                "R53RS298ZM"
+            ]
+        },
+        "AGV2DN3SYW8": {
+            "Type": "AWS::ApiGatewayV2::DomainName",
+            "Properties": {
+                "DomainName": {
+                    "Fn::Join": [
+                        ".",
+                        [
+                            {
+                                "Ref": "APIDomainPrefix"
+                            },
+                            {
+                                "Ref": "APIDomainSuffix"
+                            }
+                        ]
+                    ]
+                },
+                "DomainNameConfigurations": [
+                    {
+                        "CertificateArn": {
+                            "Fn::ImportValue": {
+                                "Fn::Sub": "${OperationsStackName}-WildcardRegionalCertificateARN"
+                            }
+                        },
+                        "SecurityPolicy": "TLS_1_2",
+                        "EndpointType": "REGIONAL"
+                    }
+                ]
+            },
+            "Metadata": {
+                "AWS::CloudFormation::Designer": {
+                    "id": "907c1653-dba2-43d0-b446-07c049836815"
+                }
+            }
+        },
+        "AGV2AM43JLD": {
+            "Type": "AWS::ApiGatewayV2::ApiMapping",
+            "Properties": {
+                "ApiId": {
+                    "Ref": "AGV2A2R1HD"
+                },
+                "DomainName": {
+                    "Fn::Join": [
+                        ".",
+                        [
+                            {
+                                "Ref": "APIDomainPrefix"
+                            },
+                            {
+                                "Ref": "APIDomainSuffix"
+                            }
+                        ]
+                    ]
+                },
+                "Stage": {
+                    "Ref": "AGV2S4BWE2"
+                }
+            },
+            "Metadata": {
+                "AWS::CloudFormation::Designer": {
+                    "id": "17f59b38-4e87-483a-9f72-cfde7a6bee5b"
+                }
+            },
+            "DependsOn": [
+                "R53RSKAU5"
+            ]
+        },
+        "R53RSKAU5": {
+            "Type": "AWS::Route53::RecordSet",
+            "Properties": {
+                "AliasTarget": {
+                    "HostedZoneId": {
+                        "Fn::GetAtt": [
+                            "AGV2DN3SYW8",
+                            "RegionalHostedZoneId"
+                        ]
+                    },
+                    "DNSName": {
+                        "Fn::GetAtt": [
+                            "AGV2DN3SYW8",
+                            "RegionalDomainName"
+                        ]
+                    },
+                    "EvaluateTargetHealth": true
+                },
+                "HostedZoneId": {
+                    "Ref": "Route53ZoneID"
+                },
+                "Name": {
+                    "Fn::Join": [
+                        ".",
+                        [
+                            {
+                                "Ref": "APIDomainPrefix"
+                            },
+                            {
+                                "Ref": "APIDomainSuffix"
+                            }
+                        ]
+                    ]
+                },
+                "Region": {
+                    "Fn::Sub": "${AWS::Region}"
+                },
+                "SetIdentifier": {
+                    "Fn::Join": [
+                        "-",
+                        [
+                            {
+                                "Ref": "APIDomainPrefix"
+                            },
+                            {
+                                "Fn::Sub": "${AWS::Region}"
+                            }
+                        ]
+                    ]
+                },
+                "Type": "A"
+            },
+            "Metadata": {
+                "AWS::CloudFormation::Designer": {
+                    "id": "611fc61b-4b14-4893-a299-106220d33122"
+                }
+            }
+        },
+        "IAMR3OKL": {
+            "Type": "AWS::IAM::Role",
+            "Properties": {
+                "AssumeRolePolicyDocument": {
+                    "Version": "2012-10-17",
+                    "Statement": [
+                        {
+                            "Effect": "Allow",
+                            "Principal": {
+                                "Service": [
+                                    "lambda.amazonaws.com"
+                                ]
+                            },
+                            "Action": "sts:AssumeRole"
+                        }
+                    ]
+                },
+                "RoleName": {
+                    "Fn::Join": [
+                        "-",
+                        [
+                            {
+                                "Ref": "APIDomainPrefix"
+                            },
+                            "NoAuthorizationComputeLambdaRole",
+                            {
+                                "Fn::Sub": "${AWS::Region}"
+                            }
+                        ]
+                    ]
+                },
+                "Policies": [
+                    {
+                        "PolicyDocument": {
+                            "Version": "2012-10-17",
+                            "Statement": [
+                                {
+                                    "Sid": "VisualEditor0",
+                                    "Effect": "Allow",
+                                    "Action": "dynamodb:*",
+                                    "Resource": "*"
+                                },
+                                {
+                                    "Sid": "VisualEditor1",
+                                    "Effect": "Allow",
+                                    "Action": [
+                                        "sqs:SendMessage",
+                                        "logs:CreateLogGroup"
+                                    ],
+                                    "Resource": [
+                                        {
+                                            "Fn::Sub": "arn:aws:logs:${AWS::Region}:${AWS::AccountId}:*"
+                                        },
+                                        {
+                                            "Fn::Sub": "arn:aws:sqs:${AWS::Region}:${AWS::AccountId}:*"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "Sid": "VisualEditor2",
+                                    "Effect": "Allow",
+                                    "Action": [
+                                        "logs:CreateLogStream",
+                                        "logs:PutLogEvents"
+                                    ],
+                                    "Resource": {
+                                        "Fn::Sub": "arn:aws:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/*:*"
+                                    }
+                                }
+                            ]
+                        },
+                        "PolicyName": {
+                            "Fn::Join": [
+                                "-",
+                                [
+                                    {
+                                        "Ref": "APIDomainPrefix"
+                                    },
+                                    "NoAuthorizationComputeLambdaPolicy",
+                                    {
+                                        "Fn::Sub": "${AWS::Region}"
+                                    }
+                                ]
+                            ]
+                        }
+                    }
+                ]
+            },
+            "Metadata": {
+                "AWS::CloudFormation::Designer": {
+                    "id": "50a01754-66b7-4e71-b362-45b000d9edbc"
+                }
+            }
+        }
+    },
+    "Parameters": {
+        "APIDomainPrefix": {
+            "Default": "main",
+            "Description": "The subdomain for the stack that the user requested. Will generate eg: main.openapi.prediket.dev and main.us-east-2.openapi.prediket.dev in us-east-2",
+            "Type": "String",
+            "MinLength": 1,
+            "MaxLength": 120
+        },
+        "APIDomainSuffix": {
+            "Default": "openapi.prediket.dev",
+            "Description": "The 'naked' domain name to be used for the API. There will be a custom domain name prefixed to this. eg: openapi.prediket.dev.",
+            "Type": "String",
+            "MinLength": 10,
+            "MaxLength": 50
+        },
+        "LambdaMemorySize": {
+            "Default": 1769,
+            "Description": "The size of the lambda in memory allocation (MB). The values correspond with fully allocated vCPUs starting with 1 vCPU.",
+            "Type": "Number",
+            "AllowedValues": [
+                1769,
+                3538,
+                5307,
+                7076,
+                8845,
+                10614
+            ]
+        },
+        "LambdaFunctionTimeout": {
+            "Default": 3,
+            "Description": "The length of time (in seconds) the worker will run until it times out. (max run time)",
+            "Type": "Number",
+            "MinValue": 1,
+            "MaxValue": 900
+        },
+        "LambdaCPUArchitecture": {
+            "Default": "arm64",
+            "Description": "The CPU architecture to run the lambda on.",
+            "Type": "String",
+            "AllowedValues": [
+                "arm64",
+                "x86_64"
+            ]
+        },
+        "LambdaPackageType": {
+            "Default": "Zip",
+            "Description": "The type of deployment package for the runtime. Set to 'Image' for container image and set to 'Zip' for .zip file archive.",
+            "Type": "String",
+            "AllowedValues": [
+                "Image",
+                "Zip"
+            ]
+        },
+        "OperationsStackName": {
+            "Default": "operations-stack",
+            "Description": "The name of the operations stack",
+            "Type": "String",
+            "MinLength": 10,
+            "MaxLength": 120
+        },
+        "Route53ZoneID": {
+            "Default": "Z00916901T4ZRKA0IKH9MN32",
+            "Description": "The ID of the Route 53 zone to manage the API DNS records.",
+            "Type": "String",
+            "MinLength": 10,
+            "MaxLength": 25
+        },
+        "S3LambdaCodeSourceBucketNamePrefix": {
+            "Default": "swiftlambda",
+            "Description": "The prefix of the bucket name containing the lambda code. The resulting bucket name will include the region: $prefix-$region eg: swiftlambda-us-east-2",
+            "Type": "String",
+            "MinLength": 10,
+            "MaxLength": 50
+        },
+        "S3LambdaSourceCodeKeyPath": {
+            "Default": "SwiftLambdaAPI/lambda.zip",
+            "Description": "Key for the lambda runtime source zip file on S3. For a path including directories do not include the initial '/' eg: Lambda/APIRuntime/lambda-arm64-20230101-0101.zip",
+            "Type": "String",
+            "MinLength": 3,
+            "MaxLength": 120
+        }
+    }
+}

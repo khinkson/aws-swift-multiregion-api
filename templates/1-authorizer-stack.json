@@ -1,0 +1,252 @@
+{
+    "AWSTemplateFormatVersion": "2010-09-09",
+    "Metadata": {
+        "AWS::CloudFormation::Designer": {
+            "c4a0a54e-883e-4b05-b758-315b23dda667": {
+                "size": {
+                    "width": 60,
+                    "height": 60
+                },
+                "position": {
+                    "x": -130,
+                    "y": 100
+                },
+                "z": 0,
+                "embeds": [],
+                "dependson": [
+                    "fb045faa-9d05-416d-a811-844626663b2f",
+                    "b107126f-7758-41f0-89d4-51db3cc591eb"
+                ]
+            },
+            "b107126f-7758-41f0-89d4-51db3cc591eb": {
+                "size": {
+                    "width": 60,
+                    "height": 60
+                },
+                "position": {
+                    "x": -30,
+                    "y": 100
+                },
+                "z": 0,
+                "embeds": []
+            }
+        }
+    },
+    "Resources": {
+        "LF384WE": {
+            "Type": "AWS::Lambda::Function",
+            "Properties": {
+                "Architectures": [
+                    {
+                        "Ref": "LambdaRuntimeArchitecture"
+                    }
+                ],
+                "Code": {
+                    "S3Bucket": {
+                        "Fn::Join": [
+                            "-",
+                            [
+                                {
+                                    "Ref": "S3LambdaCodeSourceBucketNamePrefix"
+                                },
+                                {
+                                    "Fn::Sub": "${AWS::Region}"
+                                }
+                            ]
+                        ]
+                    },
+                    "S3Key": {
+                        "Ref": "S3LambdaSourceCodeKeyPath"
+                    }
+                },
+                "Description": "The Authorizer lambda that handles requests for authorization",
+                "FunctionName": "authorizer",
+                "Handler": "hello.handler",
+                "MemorySize": {
+                    "Ref": "LambdaMemorySize"
+                },
+                "PackageType": {
+                    "Ref": "LambdaPackageType"
+                },
+                "Role": {
+                    "Fn::GetAtt": [
+                        "IAMR3ZYKQ",
+                        "Arn"
+                    ]
+                },
+                "Runtime": "provided.al2",
+                "Timeout": {
+                    "Ref": "LambdaFunctionTimeout"
+                }
+            },
+            "Metadata": {
+                "AWS::CloudFormation::Designer": {
+                    "id": "c4a0a54e-883e-4b05-b758-315b23dda667"
+                }
+            },
+            "DependsOn": [
+                "IAMR3ZYKQ"
+            ]
+        },
+        "IAMR3ZYKQ": {
+            "Type": "AWS::IAM::Role",
+            "Properties": {
+                "AssumeRolePolicyDocument": {
+                    "Version": "2012-10-17",
+                    "Statement": [
+                        {
+                            "Effect": "Allow",
+                            "Principal": {
+                                "Service": [
+                                    "lambda.amazonaws.com"
+                                ]
+                            },
+                            "Action": "sts:AssumeRole"
+                        }
+                    ]
+                },
+                "RoleName": {
+                    "Fn::Join": [
+                        "-",
+                        [
+                            "AuthorizerLambdaRole",
+                            {
+                                "Fn::Sub": "${AWS::Region}"
+                            }
+                        ]
+                    ]
+                },
+                "Policies": [
+                    {
+                        "PolicyDocument": {
+                            "Version": "2012-10-17",
+                            "Statement": [
+                                {
+                                    "Sid": "VisualEditor0",
+                                    "Effect": "Allow",
+                                    "Action": "dynamodb:*",
+                                    "Resource": "*"
+                                },
+                                {
+                                    "Sid": "VisualEditor1",
+                                    "Effect": "Allow",
+                                    "Action": [
+                                        "logs:CreateLogGroup"
+                                    ],
+                                    "Resource": [
+                                        {
+                                            "Fn::Sub": "arn:aws:logs:${AWS::Region}:${AWS::AccountId}:*"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "Sid": "VisualEditor2",
+                                    "Effect": "Allow",
+                                    "Action": [
+                                        "logs:CreateLogStream",
+                                        "logs:PutLogEvents"
+                                    ],
+                                    "Resource": {
+                                        "Fn::Sub": "arn:aws:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/*:*"
+                                    }
+                                }
+                            ]
+                        },
+                        "PolicyName": {
+                            "Fn::Join": [
+                                "-",
+                                [
+                                    "AuthorizerLambdaPolicy",
+                                    {
+                                        "Fn::Sub": "${AWS::Region}"
+                                    }
+                                ]
+                            ]
+                        }
+                    }
+                ]
+            },
+            "Metadata": {
+                "AWS::CloudFormation::Designer": {
+                    "id": "b107126f-7758-41f0-89d4-51db3cc591eb"
+                }
+            }
+        }
+    },
+    "Parameters": {
+        "LambdaMemorySize": {
+            "Default": 1769,
+            "Description": "The size of the lambda in memory allocation (MB). The values correspond with fully allocated vCPUs starting with 1 vCPU.",
+            "Type": "Number",
+            "AllowedValues": [
+                1769,
+                3538,
+                5307,
+                7076,
+                8845,
+                10614
+            ]
+        },
+        "LambdaFunctionTimeout": {
+            "Default": 3,
+            "Description": "The length of time (in seconds) the lambda worker will run until it times out. (max run time)",
+            "Type": "Number",
+            "MinValue": 1,
+            "MaxValue": 900
+        },
+        "LambdaPackageType": {
+            "Default": "Zip",
+            "Description": "The type of deployment package for the runtime. Set to 'Image' for container image and set to 'Zip' for .zip file archive.",
+            "Type": "String",
+            "AllowedValues": [
+                "Image",
+                "Zip"
+            ]
+        },
+        "LambdaRuntimeArchitecture": {
+            "Default": "arm64",
+            "Description": "The CPU architecture to run the lambda on.",
+            "Type": "String",
+            "AllowedValues": [
+                "arm64",
+                "x86_64"
+            ]
+        },
+        "S3LambdaCodeSourceBucketNamePrefix": {
+            "Default": "swiftlambda",
+            "Description": "The prefix of the bucket name containing the lambda code. End result prefix+region eg: authorizerBucketName-us-east-2.",
+            "Type": "String",
+            "MinLength": 10,
+            "MaxLength": 50
+        },
+        "S3LambdaSourceCodeKeyPath": {
+            "Default": "SwiftLambdaAuthorizer/lambda.zip",
+            "Description": "Key for the Authorizer lambda source zip file on S3. For a path including directories do not include the initial '/' eg: Lambda/AuthorizerRuntime/lambda-arm64-20230101-0101.zip",
+            "Type": "String",
+            "MinLength": 10,
+            "MaxLength": 120
+        }
+    },
+    "Outputs": {
+        "AuthorizerARN": {
+            "Description": "The ARN for the authorizer lambda function",
+            "Value": {
+                "Fn::GetAtt": [
+                    "LF384WE",
+                    "Arn"
+                ]
+            },
+            "Export": {
+                "Name": {
+                    "Fn::Join" : [ 
+                        "-", 
+                        [ 
+                            { "Ref" : "AWS::StackName" }, 
+                            "AuthorizerARN" 
+                        ] 
+                    ]
+                }
+            }
+        }
+    }
+}
