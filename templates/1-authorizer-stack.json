@@ -60,7 +60,20 @@
                     }
                 },
                 "Description": "The Authorizer lambda that handles requests for authorization",
-                "FunctionName": "authorizer",
+                "FunctionName": {
+                    "Fn::Join": [
+                        "-",
+                        [
+                            "authorizer",
+                            {
+                                "Ref": "S3LambdaCodeSourceBucketNamePrefix"
+                            },
+                            {
+                                "Fn::Sub": "${AWS::Region}"
+                            }
+                        ]
+                    ]
+                },
                 "Handler": "hello.handler",
                 "MemorySize": {
                     "Ref": "LambdaMemorySize"
@@ -109,7 +122,7 @@
                     "Fn::Join": [
                         "-",
                         [
-                            "AuthorizerLambdaRole",
+                            "SwiftAuthorizerLambdaRole",
                             {
                                 "Fn::Sub": "${AWS::Region}"
                             }

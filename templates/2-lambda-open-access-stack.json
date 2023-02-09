@@ -229,6 +229,9 @@
                                 "Ref": "APIDomainPrefix"
                             },
                             {
+                                "Ref": "S3LambdaCodeSourceBucketNamePrefix"
+                            },
+                            {
                                 "Fn::Sub": "${AWS::Region}"
                             }
                         ]
@@ -684,7 +687,10 @@
                             {
                                 "Ref": "APIDomainPrefix"
                             },
-                            "NoAuthorizationComputeLambdaRole",
+                            {
+                                "Ref": "APIDomainSuffix"
+                            },
+                            "NoAuthComputeLambdaRole",
                             {
                                 "Fn::Sub": "${AWS::Region}"
                             }
@@ -737,6 +743,9 @@
                                 [
                                     {
                                         "Ref": "APIDomainPrefix"
+                                    },
+                                    {
+                                        "Ref": "APIDomainSuffix"
                                     },
                                     "NoAuthorizationComputeLambdaPolicy",
                                     {

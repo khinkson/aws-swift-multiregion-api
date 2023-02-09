@@ -225,8 +225,9 @@
                     "Fn::Join": [
                         "-",
                         [
+                            "authorizedapi",
                             {
-                                "Ref": "APIDomainPrefix"
+                                "Ref": "S3LambdaCodeSourceBucketNamePrefix"
                             },
                             {
                                 "Fn::Sub": "${AWS::Region}"
@@ -456,7 +457,7 @@
                 },
                 "AuthorizerType": "REQUEST",
                 "AuthorizerUri": {
-                    "Fn::Sub": "arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/arn:aws:lambda:${AWS::Region}:${AWS::AccountId}:function:authorizer/invocations"
+                    "Fn::Sub": "arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/arn:aws:lambda:${AWS::Region}:${AWS::AccountId}:function:authorizer-${S3LambdaCodeSourceBucketNamePrefix}-${AWS::Region}/invocations"
                 },
                 "EnableSimpleResponses": true,
                 "IdentitySource": [
@@ -750,6 +751,12 @@
                     "Fn::Join": [
                         "-",
                         [
+                            {
+                                "Ref": "APIDomainPrefix"
+                            },
+                            {
+                                "Ref": "APIDomainSuffix"
+                            },
                             "ControlPlaneLambdaRole",
                             {
                                 "Fn::Sub": "${AWS::Region}"
@@ -801,6 +808,12 @@
                             "Fn::Join": [
                                 "-",
                                 [
+                                    {
+                                        "Ref": "APIDomainPrefix"
+                                    },
+                                    {
+                                        "Ref": "APIDomainSuffix"
+                                    },
                                     "ControlPlaneLambdaPolicy",
                                     {
                                         "Fn::Sub": "${AWS::Region}"

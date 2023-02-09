@@ -76,6 +76,9 @@
                         [
                             "WorkerLambdaRole",
                             {
+                                "Ref": "WildcardCertificateDomainName"
+                            },
+                            {
                                 "Fn::Sub": "${AWS::Region}"
                             }
                         ]
