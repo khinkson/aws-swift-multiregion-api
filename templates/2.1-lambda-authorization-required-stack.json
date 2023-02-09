@@ -757,7 +757,7 @@
                             {
                                 "Ref": "APIDomainSuffix"
                             },
-                            "ControlPlaneLambdaRole",
+                            "ControlPlaneRole",
                             {
                                 "Fn::Sub": "${AWS::Region}"
                             }

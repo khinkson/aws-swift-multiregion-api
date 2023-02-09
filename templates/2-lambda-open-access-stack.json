@@ -690,7 +690,7 @@
                             {
                                 "Ref": "APIDomainSuffix"
                             },
-                            "NoAuthComputeLambdaRole",
+                            "NoAuthComputeRole",
                             {
                                 "Fn::Sub": "${AWS::Region}"
                             }
