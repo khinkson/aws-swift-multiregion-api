@@ -833,15 +833,15 @@
     },
     "Parameters": {
         "APIDomainPrefix": {
-            "Default": "main",
+            "Default": "authapi",
             "Description": "The subdomain for the stack that the user requested. Will generate eg: main.authorizedapi.prediket.dev and main.us-east-2.authorizedapi.prediket.dev in us-east-2",
             "Type": "String",
             "MinLength": 1,
             "MaxLength": 120
         },
         "APIDomainSuffix": {
-            "Default": "authorizedapi.prediket.dev",
-            "Description": "The 'naked' domain name to be used for the API. There will be a custom domain name prefixed to this. eg: authorizedapi.prediket.dev.",
+            "Default": "swiftdemo0.flew.cloud",
+            "Description": "The 'naked' domain name to be used for the API. There will be a custom domain name prefixed to this. eg: authorswiftdemo0.flew.cloud.",
             "Type": "String",
             "MinLength": 10,
             "MaxLength": 50
@@ -860,7 +860,7 @@
             ]
         },
         "LambdaAuthorizerStackName": {
-            "Default": "swift-lambda-authorizer-stack",
+            "Default": "authorizer-swiftdemo0-stack",
             "Description": "The name for the lambda authorizer stack. It is used to import the lambda ARN value.",
             "Type": "String",
             "MinLength": 10,
@@ -902,7 +902,7 @@
             ]
         },
         "OperationsStackName": {
-            "Default": "operations-stack",
+            "Default": "operations-swiftdemo0-stack",
             "Description": "The name of the operations stack",
             "Type": "String",
             "MinLength": 10,
@@ -916,7 +916,7 @@
             "MaxLength": 25
         },
         "S3LambdaCodeSourceBucketNamePrefix": {
-            "Default": "swiftlambda",
+            "Default": "swiftdemo0",
             "Description": "The prefix of the bucket name containing the lambda code. The resulting bucket name will include the region: $prefix-$region eg: swiftlambda-us-east-2",
             "Type": "String",
             "MinLength": 10,

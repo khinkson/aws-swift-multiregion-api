@@ -223,8 +223,8 @@
             "MaxLength": 25
         },
         "WildcardCertificateDomainName": {
-            "Default": "openapi.prediket.dev or authorizedapi.prediket.dev",
-            "Description": "The wildcard name for the certificate to use. Wildcard domain based on default eg: *.openapi.prediket.dev or *.authorizedapi.prediket.dev.",
+            "Default": "swiftdemo0.flew.cloud",
+            "Description": "The wildcard name for the certificate to use. Wildcard domain based on default eg: *.swiftdemo0.flew.cloud",
             "Type": "String",
             "MinLength": 10,
             "MaxLength": 120

@@ -226,8 +226,8 @@
             ]
         },
         "S3LambdaCodeSourceBucketNamePrefix": {
-            "Default": "swiftlambda",
-            "Description": "The prefix of the bucket name containing the lambda code. End result prefix+region eg: authorizerBucketName-us-east-2.",
+            "Default": "swiftdemo0",
+            "Description": "The prefix of the bucket name containing the lambda code. End result prefix+region eg: swiftdemo0-us-east-2.",
             "Type": "String",
             "MinLength": 10,
             "MaxLength": 50
