@@ -87,7 +87,7 @@ __NB:__ These changes may take some time to propagate and become available.
 2. If necessary change to the region where you want to setup the infrastructure. **NB**: Graviton/Arm based lambdas are not available in all regions. If you wish to run ARM only you should [check here](https://aws.amazon.com/lambda/pricing/) first to see if Arm CPUs are available in your regions. Once on that page, scroll down to where the pricing is listed and choose `Arm price`. Select the region to see a list of regions in which Arm is available.
 3. Click `Create Stack` (with new Resources if asked)
 4. With template ready, choose to upload the template using the project file [0-operations-stack.json](/templates/0-operations-stack.json). Hit next.
-5. Enter the stack name `operations-stack`. For the parameters enter the Zone ID of your domain name and the wildcard domain name to use without the astericks prefix. Eg: say `flew.cloud` is you domain, enter `swiftdemo0.flew.cloud` to get `*.swiftdemo0.flew.cloud` domain depending on your choice of open or authorized domain. The wildcard is used because additional domains are created for each region. Click next.
+5. Enter the stack name `operations-swiftdemo0-stack`. For the parameters enter the Zone ID of your domain name and the wildcard domain name to use without the astericks prefix. Eg: say `flew.cloud` is you domain, enter `swiftdemo0.flew.cloud` to get `*.swiftdemo0.flew.cloud` domain depending on your choice of open or authorized domain. The wildcard is used because additional domains are created for each region. Click next.
 5. Under IAM role choose the previously created `SwiftCloudformationRole`. 
 6. Under `Stack creation options` __enable__ `Termination protection`. Click next.
 7. Check: `I acknowledge that AWS CloudFormation might create IAM resources with custom names.`
@@ -104,7 +104,7 @@ You have already made your choice as to open or authorized API access. You can i
 **Steps:**
 1. From Cloudformation, click `Create Stack` (with new Resources if asked)
 2. With template ready, choose to upload the template using the project file [2.1-authorizer-stack.json](/templates/2.1-authorizer-stack.json). Hit next.
-3. Enter the stack name `swift-lambda-authorizer-stack`. For the parameters enter the Zone ID of your domain name. Fill out the rest of the parameters listed. Click Next.
+3. Enter the stack name `authorizer-swiftdemo0-stack`. For the parameters enter the Zone ID of your domain name. Fill out the rest of the parameters listed. Click Next.
 4. Under IAM role choose the previously created `SwiftCloudformationRole`. 
 5. Under `Stack creation options` __enable__ `Termination protection`. Click next.
 6. Check: `I acknowledge that AWS CloudFormation might create IAM resources with custom names`.
@@ -113,7 +113,7 @@ You have already made your choice as to open or authorized API access. You can i
 #### The Swift API Lambda Stack
 **Requirements:**
 - the Zone ID of your domain name from Route53.
-- the name you entered for the operations stack (`operations-stack` if you followed the instructions above).
+- the name you entered for the operations stack (`operations-swiftdemo0-stack` if you followed the instructions above).
 - Go to the [SwiftLambdaAPI](https://github.com/khinkson/SwiftLambdaAPI) project and follow the instructions on how to build and upload your swift lambda API package.
 - the name of your S3 bucket and keyPath where lambda source code package was uploaded.
 
