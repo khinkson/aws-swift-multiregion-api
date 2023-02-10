@@ -3,14 +3,14 @@
 
 Using Swift in the AWS Cloud can take many forms. Here we will focus on a serverless, multi-regional setup. The aim here is to demonstrate how the infrastructure elements fit together to make a distributed API. You will come away from this with a working serverless, multi-regional Swift based API served by [AWS Lambda](https://aws.amazon.com/lambda/).
 
-This project is part of a series that includes other useful elements. For more information see the [Swift in the Cloud Series](https://www.flue.cloud/swift-server-cloud/).
+This project is part of a series that includes other useful elements. For more information see the [Swift in the Cloud Series](https://www.flew.cloud/swift-server-cloud/).
 
 ## Planned Infrastructure
 With the templates provided, you can create and extend your API to be as close to your users as possible by installing infrastructure in each region of your choosing. In real time, user requests will be routed to the region with the lowest latency from their location.
 
 You are **not limited** to two (2) regions. You can add as many regions as support the underlying infrastructure as you require. __NB__: so far Jakarta, Hyderabad and Osaka do not support the API Gateway V2 HTTP APIs used in these templates.
 
-<img src="https://www.flue.cloud/images/diagrams/aws-swift-multiregion-api.png" alt="Serverless Multi-region API" />
+<img src="https://www.flew.cloud/images/diagrams/aws-swift-multiregion-api.png" alt="Serverless Multi-region API" />
 
 ## Requirements
 To complete this setup you will need:
@@ -54,8 +54,8 @@ Before you get going, know that these instructions were used to setup a live API
 | ------- | ----- | ----------------- |
 | **Cloudformation Role Name** | `SwiftCloudformationRole` | No need to change. |
 | **Operations Stack Name** | `operations-stack` | No need to change. If you do, change it everywhere. |
-| **WildcardCertificateDomainName** | `openapi.prediket.dev` or `authorizedapi.prediket.dev` | Replace `prediket.dev` with your own domain name. |
-| **S3LambdaCodeSourceBucketNamePrefix** | `swiftlambda` | No need to change. Actual bucket name appends the region name eg: `swiftlambda-us-east-2`.|
+| **WildcardCertificateDomainName** | `swiftdemo0.flew.cloud` | Replace with your own domain name. |
+| **S3LambdaCodeSourceBucketNamePrefix** | `swiftdemo0` | Final bucket name appends the region name eg: `swiftdemo0-us-east-2`.|
 | **S3LambdaSourceCodeKeyPath** | `SwiftLambdaAPI/lambda.zip` or `SwiftLambdaAAuthorizer/lambda.zip` | No need to change. |
 
 ### A. Setup Cloudformation Permissions
@@ -87,7 +87,7 @@ __NB:__ These changes may take some time to propagate and become available.
 2. If necessary change to the region where you want to setup the infrastructure. **NB**: Graviton/Arm based lambdas are not available in all regions. If you wish to run ARM only you should [check here](https://aws.amazon.com/lambda/pricing/) first to see if Arm CPUs are available in your regions. Once on that page, scroll down to where the pricing is listed and choose `Arm price`. Select the region to see a list of regions in which Arm is available.
 3. Click `Create Stack` (with new Resources if asked)
 4. With template ready, choose to upload the template using the project file [0-operations-stack.json](/templates/0-operations-stack.json). Hit next.
-5. Enter the stack name `operations-stack`. For the parameters enter the Zone ID of your domain name and the wildcard domain name to use without the astericks prefix. Eg: say `prediket.dev` is you domain, enter `openapi.prediket.dev` or `authorizedapi.prediket.dev` to get a `*.openapi.example.com` or `*.authorizedapi.prediket.dev` domain depending on your choice of open or authorized domain. The wildcard is used because additional domains are created for each region. Click next.
+5. Enter the stack name `operations-stack`. For the parameters enter the Zone ID of your domain name and the wildcard domain name to use without the astericks prefix. Eg: say `prediket.dev` is you domain, enter `swiftdemo0.flew.cloud` or `swiftdemo0.flew.cloud` to get a `*.openapi.example.com` or `*.swiftdemo0.flew.cloud` domain depending on your choice of open or authorized domain. The wildcard is used because additional domains are created for each region. Click next.
 5. Under IAM role choose the previously created `SwiftCloudformationRole`. 
 6. Under `Stack creation options` __enable__ `Termination protection`. Click next.
 7. Check: `I acknowledge that AWS CloudFormation might create IAM resources with custom names.`
@@ -121,13 +121,13 @@ You have already made your choice as to open or authorized API access. You can i
 	- __Open Access Version__: With template ready, choose to upload the template using the project file [2-lambda-open-access-stack.json](/templates/2-lambda-open-access-stack.json). Hit next. 
 	__OR__
 	- __Authorization Required Version__: With template ready, choose to upload the template using the project file [2.1-lambda-authorization-required-stack.json](/templates/2.1-lambda-authorization-required-stack.json). Hit next.
-2. For the authorization required API, enter the stack name `authorized-swift-lambda-api-stack`. For the open access API enter the name `open-swift-lambda-api-stack`. For the parameters enter the Zone ID of your domain name, choose a subdomain prefix for the wildcard API domain. For this example we will choose `main` for the parameter APIDomainPrefix. This will result in `main.openapi.prediket.dev` or `main.authorizedapi.prediket.dev` as our API domain. Fill out the rest of the parameters listed. Click Next.
+2. For the authorization required API, enter the stack name `authorized-swift-lambda-api-stack`. For the open access API enter the name `open-swift-lambda-api-stack`. For the parameters enter the Zone ID of your domain name, choose a subdomain prefix for the wildcard API domain. For this example we will choose `main` for the parameter APIDomainPrefix. This will result in `main.swiftdemo0.flew.cloud` or `main.swiftdemo0.flew.cloud` as our API domain. Fill out the rest of the parameters listed. Click Next.
 3. Under IAM role choose the previously created `SwiftCloudformationRole`. 
 4. Under `Stack creation options` __enable__ `Termination protection`. Click next.
 5. Check off: `I acknowledge that AWS CloudFormation might create IAM resources with custom names`.
 6. Submit. Wait for the this stack to complete creation. This may take more than a few minutes to complete.
 
-Once complete you should be able to send a request to your API domain to see if it is working. There are two domains setup for each regional API. https://main.openapi.prediket.dev routes you to the nearest region by latency. In this case there is only one region setup. To access a specific region follow the format — https://main.us-east-2.openapi.predket.dev to access the API infrastructure in us-east-2 (Ohio). Of course replace the region and domain name appropriately to match your setup.
+Once complete you should be able to send a request to your API domain to see if it is working. There are two domains setup for each regional API. https://main.swiftdemo0.flew.cloud routes you to the nearest region by latency. In this case there is only one region setup. To access a specific region follow the format — https://main.us-east-2.openapi.predket.dev to access the API infrastructure in us-east-2 (Ohio). Of course replace the region and domain name appropriately to match your setup.
 
 To create another infrastructure stack in a different region, repeat the steps starting from `C. Install the Cloudformation Templates`  in a new region using the same domain name and prefix parameters. You can then test the domain name latency routing or reach each specific region if necessary.
 
@@ -136,7 +136,7 @@ The APIs, both open and requiring authorization have been setup for anyone who w
 
 A successful response looks like this and should contain the region so you know which one you were routed to:
 ```sh
-curl "https://main.openapi.prediket.dev/hello"                                 
+curl "https://openapi.swiftdemo0.flew.cloud/hello"                                 
 {"created":"2023-01-11T18:49:01.386Z","description":"We said hello.","id":"2806E285-ACA9-4E3E-9045-6067334307E8","region":"us-east-2","title":"Hello"}
 ```
 
@@ -144,21 +144,21 @@ curl "https://main.openapi.prediket.dev/hello"                       
 
 | __Region__ | __Domain__ |
 | ------ | ------ |
-| **closest by latency** | main.openapi.prediket.dev |
-| **us-east-2 (Ohio)**   | main.us-east-2.openapi.prediket.dev |
-| **us-west-2 (Oregon)**   | main.us-west-2.openapi.prediket.dev |
-| **eu-west-2 (London)**   | main.eu-west-2.openapi.prediket.dev |
-| **eu-central-1 (Frankfurt)**   | main.eu-central-1.openapi.prediket.dev |
-| **ap-southeast-1 (Singapore)**   | main.ap-southeast-1.openapi.prediket.dev |
-| **sa-east-1 (São Paulo)**   | main.sa-east-1.openapi.prediket.dev |
-| **ap-northeast-1 (Tokyo)**   | main.ap-northeast-1.openapi.prediket.dev |
+| **closest by latency** | openapi.swiftdemo0.flew.cloud |
+| **us-east-2 (Ohio)**   | openapi.us-east-2.swiftdemo0.flew.cloud |
+| **us-west-2 (Oregon)**   | openapi.us-west-2.swiftdemo0.flew.cloud |
+| **eu-west-2 (London)**   | openapi.eu-west-2.swiftdemo0.flew.cloud |
+| **eu-central-1 (Frankfurt)**   | openapi.eu-central-1.swiftdemo0.flew.cloud |
+| **ap-southeast-1 (Singapore)**   | openapi.ap-southeast-1.swiftdemo0.flew.cloud |
+| **sa-east-1 (São Paulo)**   | openapi.sa-east-1.swiftdemo0.flew.cloud |
+| **ap-northeast-1 (Tokyo)**   | openapi.ap-northeast-1.swiftdemo0.flew.cloud |
 
 From an EC2 instance in us-east-2 (Ohio) to the Open SwiftLambdaAPI in us-east-2 (Ohio) — approximately 37ms to get a response:
 
 ```sh
 curl -w "@curl-format.txt" \
 -o /dev/null \
--s "https://main.openapi.prediket.dev/hello"
+-s "https://openapi.swiftdemo0.flew.cloud/hello"
 
           DNS Lookup:  0.001086s
  Remote Host Connect:  0.001606s
@@ -174,21 +174,21 @@ curl -w "@curl-format.txt" \
 
 | __Region__ | __Domain__ |
 | ------ | ------ |
-| **closest by latency** | main.authorizedapi.prediket.dev |
-| **us-east-1 (N. Virginia)**   | main.us-east-1.authorizedapi.prediket.dev |
-| **us-west-1 (California)**   | main.us-west-1.authorizedapi.prediket.dev |
-| **eu-west-1 (Ireland)**   | main.eu-west-1.authorizedapi.prediket.dev |
-| **ap-south-1 (Mumbai)**   | main.ap-south-1.authorizedapi.prediket.dev |
-| **eu-west-3 (Paris)**   | main.eu-west-3.authorizedapi.prediket.dev |
-| **ap-southeast-2 (Sydney)**   | main.ap-southeast-2.authorizedapi.prediket.dev |
-| **ap-northeast-2 (Seoul)**   | main.ap-northeast-2.authorizedapi.prediket.dev |
+| **closest by latency** | authapi.swiftdemo0.flew.cloud |
+| **us-east-1 (N. Virginia)**   | authapi.us-east-1.swiftdemo0.flew.cloud |
+| **us-west-1 (California)**   | authapi.us-west-1.swiftdemo0.flew.cloud |
+| **eu-west-1 (Ireland)**   | authapi.eu-west-1.swiftdemo0.flew.cloud |
+| **ap-south-1 (Mumbai)**   | authapi.ap-south-1.swiftdemo0.flew.cloud |
+| **eu-west-3 (Paris)**   | authapi.eu-west-3.swiftdemo0.flew.cloud |
+| **ap-southeast-2 (Sydney)**   | authapi.ap-southeast-2.swiftdemo0.flew.cloud |
+| **ap-northeast-2 (Seoul)**   | authapi.ap-northeast-2.swiftdemo0.flew.cloud |
 
 From an EC2 instance in us-east-1 (N. Virginia) to the Authorization Required SwiftLambdaAPI in us-east-1 (N. Virginia) — approximately 40ms to get a response:
 
 ```sh
 curl -w "@curl-format.txt" \
 -o /dev/null \
--s  "https://main.authorizedapi.prediket.dev/hello" \
+-s  "https://authapi.swiftdemo0.flew.cloud/hello" \
 -H 'Content-Type: application/json' \
 -H 'Authorization: SKOcSFZd8pKoZ24WXYK2dSEc5Nf2eao9QOOvpPYM'
 
@@ -203,7 +203,7 @@ curl -w "@curl-format.txt" \
 ```
 
 ## Next Steps
-As mentioned above this project is part of the [Swift in the Cloud Series](https://www.flue.cloud/swift-server-cloud/). The next step in the series deals with [DynamoDB](https://aws.amazon.com/dynamodb/) — a multi-regional database (key value NOSQL database) that you can use in conjunction with the multi-regional lambda API. 
+As mentioned above this project is part of the [Swift in the Cloud Series](https://www.flew.cloud/swift-server-cloud/). The next step in the series deals with [DynamoDB](https://aws.amazon.com/dynamodb/) — a multi-regional database (key value NOSQL database) that you can use in conjunction with the multi-regional lambda API. 
 
 ## Further Improvements
 Time will bring changes to this project. To really make this setup robust, it can be improved by adding:
